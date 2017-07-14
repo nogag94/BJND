@@ -23,7 +23,7 @@ def bjnd_image(path, filename):
 
     # Calculate BJND-Texture
     bjnd_img_noriega= bjnd_texture(image, texture)
-    #print filename, numbits(bjnd_img_noriega)
+    print filename, numbits(bjnd_img_noriega)
 
 if __name__=='__main__':   
     '''filenames_left = ['Adirondack0.png','ArtL0.png','Jadeplant0.png','Motorcycle0.png','MotorcycleE0.png','Piano0.png','PianoL0.png',

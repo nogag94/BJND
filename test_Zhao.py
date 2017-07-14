@@ -23,7 +23,7 @@ def bjnd_image(path, filename):
 
     # Calculate BJND values
     bjnd_img_zhao= bjnd(image, edges)
-    #print filename, numbits(bjnd_img_zhao)
+    print filename, numbits(bjnd_img_zhao)
     
 if __name__=='__main__':   
     '''filenames_left = ['Adirondack0.png','ArtL0.png','Jadeplant0.png','Motorcycle0.png','MotorcycleE0.png','Piano0.png','PianoL0.png',

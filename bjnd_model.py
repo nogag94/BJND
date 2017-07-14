@@ -6,6 +6,7 @@
  Keywords:
         - Edges
         - Background Luminance
+        - Texture
 '''
 
 import random
@@ -140,3 +141,13 @@ def bjnd_texture(image,texture):
             tex = texture[y,x]
             bjnd_final[y, x] = A_limit(bg) + (tex*8)
     return bjnd_final 
+
+def numbits(bjnd_values):
+    total_bits = 0
+    axis_y = bjnd_values.shape[0]
+    axis_x = bjnd_values.shape[1]
+    for y in range(0,axis_y):
+        for x in range(0, axis_x):
+            val = bjnd_values[y,x]
+            total_bits = total_bits + int( math.ceil(math.log(val+1)/math.log(2)))
+    return total_bits
