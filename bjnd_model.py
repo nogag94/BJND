@@ -2,7 +2,7 @@
 '''
  Reference: Binocular Just-Noticeable-Difference Model for Stereoscopic Images 
             # Autors: Yin Zhao, Zhenzhong Chen, Member, IEEE, Ce Zhu, Yap-Peng Tan, Senior Member, IEEE, and Lu Yu
- This algorithm calculate the maximum background luminance changes that can be modified in an image before the HVS perceives them
+ This algorithm calculates the maximum background luminance changes that can be modified in an image before the HVS perceives them
  Keywords:
         - Edges
         - Background Luminance
@@ -94,3 +94,49 @@ def max(num1, num2):
     else:
         max = num2
     return max        
+
+def umbral_canny(image):
+    edges = cv2.Canny(image,100,150)
+    edges[edges==255] = 1
+    axis_y = edges.shape[0]
+    axis_x = edges.shape[1]
+    windowsize_y = 5
+    windowsize_x = 5
+    k = 5
+    rho = np.ones((edges.shape[0], edges.shape[1]))
+    c = 0
+    for y in range(0,axis_y - windowsize_y):
+        for x in range(0,axis_x - windowsize_x):
+            window = edges[y:y+windowsize_y, x:x+windowsize_x]
+            sum_win = sum_matrix(window)/float(k*k)
+            rho[y:y+windowsize_y, x:x+windowsize_x] = sum_win
+
+    pixel_type = np.zeros((edges.shape[0], edges.shape[1]))
+    texture = np.zeros((edges.shape[0], edges.shape[1]))
+
+    # Umbralización para la imagen
+    for y in range(0,axis_y):
+        for x in range(0, axis_x):
+            if rho[y,x] < 0.1:
+                texture[y,x] = 0
+                pixel_type[y,x] = 0
+            elif rho[y,x] >= 0.1 and rho[y,x] <= 0.2 :
+                texture[y,x] = 0
+                pixel_type[y,x] = 255            
+            elif rho[y,x] > 0.2:
+                texture[y,x] = float((rho[y,x]- 0.2) / 0.8)
+                pixel_type[y,x] = 128
+    return rho, pixel_type, texture
+
+
+def bjnd_texture(image,texture):
+    coords = {}
+    axis_y = image.shape[0]
+    axis_x = image.shape[1]
+    bjnd_final = np.zeros((image.shape[0], image.shape[1]), np.uint8)
+    for y in range(0,axis_y):
+        for x in range(0, axis_x):
+            bg = image[y,x]
+            tex = texture[y,x]
+            bjnd_final[y, x] = A_limit(bg) + (tex*8)
+    return bjnd_final 
