@@ -33,7 +33,9 @@ if __name__=='__main__':
                  'Pipes1.png','Playroom1.png','Playtable1.png','PlaytableP1.png','Recycle1.png','Shelves1.png','Teddy1.png','Vintage1.png']
     
     path = '.\Yimages\\'
-
+    '''for name in filenames_left:
+        get_image_modified(path, name)'''
+        
     for name in filenames_right:
         bjnd_image(path, name)
     
