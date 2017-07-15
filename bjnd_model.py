@@ -39,7 +39,7 @@ def eh (image,windowsize_y = 5, windowsize_x = 5):
             Gx = sum_matrix(HSOBEL_WEIGHTS * window)/25
             Gy = sum_matrix(VSOBEL_WEIGHTS * window)/25
             edge [y,x] = math.sqrt((math.fabs(Gx))**2 + (math.fabs(Gy))**2)
-    np.savetxt("edges.txt", edge, fmt='%10.2f')
+    #np.savetxt("edges.txt", edge, fmt='%10.2f')
     return edge
     
 def AC_limit(background,edge):
